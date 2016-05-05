@@ -19,8 +19,8 @@ class Course(models.Model):
 	created_at = models.DateTimeField('Criado em', auto_now_add=True)
 	update_at = models.DateTimeField('Atualizado em', auto_now=True)
 
+	objects = CourseManager()
+	
 	def __str__(self):
 
 		return self.name
-
-	objects = CourseManager()
