@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 # Import URLS
 from simplemooc.core import urls as core_urls 
 from simplemooc.courses import urls as courses_urls
@@ -24,3 +26,7 @@ urlpatterns = [
 	url(r'^cursos/', include(courses_urls, namespace='course')),
     url(r'^admin/', admin.site.urls),
 ]
+
+# Servir arquivos estaticos em desenvolvimento
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
