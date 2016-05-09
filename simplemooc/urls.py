@@ -23,7 +23,7 @@ from simplemooc.courses import urls as courses_urls
 
 urlpatterns = [
 	url(r'^', include(core_urls, namespace='core')),
-	url(r'^cursos/', include(courses_urls, namespace='course')),
+	url(r'^cursos/', include(courses_urls, namespace='courses')),
     url(r'^admin/', admin.site.urls),
 ]
 
