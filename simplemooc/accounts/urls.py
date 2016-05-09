@@ -15,20 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from django.conf import settings
-from django.conf.urls.static import static
-# Import URLS
-from simplemooc.core import urls as core_urls 
-from simplemooc.courses import urls as courses_urls
-from simplemooc.accounts import urls as accounts_urls
+from . import views
 
 urlpatterns = [
-	url(r'^', include(core_urls, namespace='core')),
-    url(r'^conta/', include(accounts_urls, namespace='accounts')),
-	url(r'^cursos/', include(courses_urls, namespace='courses')),
-    url(r'^admin/', admin.site.urls),
+    url(r'^$', views.dashboard, name='dashboard'),
+    url(r'^entrar/$', 'django.contrib.auth.views.login', {'template_name': 'accounts/login.html'}, name='login'),
+	url(r'^sair/$', 'django.contrib.auth.views.logout', {'next_page': 'core:home'}, name='logout'),
+    url(r'^cadastre-se/$', views.register, name='register'),
+    url(r'^editar/$', views.edit, name='edit'),
+	url(r'^editar-senha/$', views.edit_password, name='edit_password'),
 ]
-
-# Servir arquivos estaticos em desenvolvimento
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

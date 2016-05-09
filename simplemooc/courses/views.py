@@ -7,18 +7,24 @@ from .forms import ContactCourse
 def index(request):
 	courses = Course.objects.all()
 	template_name = 'courses/index.html'
-	return render(request, template_name, {'courses': courses})
+	context = {
+		'courses': courses
+	}
+	return render(request, template_name, context)
 
 def details(request, slug):
 	course = get_object_or_404(Course, slug=slug)
 	template_name='courses/details.html'
-	send_email = False
+	context = {}
 	if request.method == 'POST':
 		form = ContactCourse(request.POST)
 		if form.is_valid():
+			context['is_valid'] = True
 			form.send_mail(course)
-			send_email = True
 			form = ContactCourse()
 	else:
 		form = ContactCourse()
-	return render(request, template_name, {'course': course, 'form': form, 'send_email': send_email})
+
+	context['form'] = form
+	context['course'] = course
+	return render(request, template_name, context)
