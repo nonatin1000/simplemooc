@@ -135,12 +135,12 @@ EMAIL_USE_TLS = True
 #EMAIL_USE_SSL = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'nrdesales@gmail.com'
-EMAIL_HOST_PASSWORD = '*********'
+EMAIL_HOST_PASSWORD = '*******'
 EMAIL_PORT = 587
-
 CONTACT_EMAIL = EMAIL_HOST_USER
 
 # Auth
 LOGIN_URL = 'accounts:login'
 LOGIN_REDIRECT_URL = 'core:home'
 LOGOUT_URL = 'accounts:logout'
+AUTH_USER_MODEL = 'accounts.User' # Usuário do sistema será o usuario que criamos e não o user padrão do django 

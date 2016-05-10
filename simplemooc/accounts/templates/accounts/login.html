@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+
 {% block content %}
 <div class="pure-g-r content-ribbon">
     <div class="pure-u-1">
@@ -22,7 +23,7 @@
         </fieldset>
         <p>
             Não é cadastrado? <a href="{% url 'accounts:register' %}" title="">Cadastre-se</a> <br />
-            Esqueceu a senha? <a href="" title="">Nova senha</a> <br />
+            Esqueceu a senha? <a href="{% url 'accounts:password_reset' %}" title="">Nova senha</a> <br />
         </p>
     </form>
 </div>
