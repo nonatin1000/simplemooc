@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from django.shortcuts import render, get_object_or_404
-from .models import Course
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Course, Enrollment
+from django.contrib import messages
 from .forms import ContactCourse
 
 def index(request):
@@ -28,3 +29,15 @@ def details(request, slug):
 	context['form'] = form
 	context['course'] = course
 	return render(request, template_name, context)
+
+def enrollment(request, slug):
+	course = get_object_or_404(Course, slug=slug)
+	enrollment, created = Enrollment.objects.get_or_create(user=request.user, course=course)
+
+	if created:
+		enrollment.active()
+		messages.sucess(request, 'Você foi inscrito no curso com sucesso.')
+	else:
+		messages.info(request, 'Você já está inscrito no curso.')
+
+	return redirect('accounts:dashboard')
