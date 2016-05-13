@@ -2,9 +2,9 @@
 
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Course, Enrollment
+from .models import Course, Enrollment, Announcement
 from django.contrib import messages
-from .forms import ContactCourse
+from .forms import ContactCourse, CommentForm
 
 def index(request):
 	courses = Course.objects.all()
@@ -37,9 +37,9 @@ def enrollment(request, slug):
 
 	if created:
 		enrollment.active()
-		messages.sucess(request, 'Você foi inscrito no curso com sucesso.')
+		messages.success(request, 'Você foi inscrito no curso com sucesso')
 	else:
-		messages.info(request, 'Você já está inscrito no curso.')
+		messages.info(request, 'Você já está inscrito no curso')
 
 	return redirect('accounts:dashboard')
 
@@ -71,5 +71,32 @@ def announcements(request, slug):
 	context = {
 		'course': course,
 		'announcements': announcements
+	}
+	return render(request, template_name, context)
+
+@login_required
+def show_announcement(request, slug, pk):
+	template_name='courses/show_announcement.html'
+	course = course = get_object_or_404(Course, slug=slug)
+	if not request.user.is_staff:
+		enrollment = get_object_or_404(Enrollment, user=request.user, course=course)
+
+		if not enrollment.is_approved():
+			messages.error(request, 'A sua inscrição está pendente')
+			return redirect('accounts:dashboard')
+
+	announcement = get_object_or_404(course.announcements.all(), pk=pk)
+	form = CommentForm(request.POST or None)
+	if form.is_valid():
+		comment = form.save(commit=False)
+		comment.user = request.user
+		comment.announcement = announcement
+		comment.save()
+		form = CommentForm()
+		messages.add_message(request, messages.SUCCESS, 'Seu comentário foi enviado com sucesso.')
+	context = {
+		'course': course,
+		'announcement': announcement,
+		'form': form
 	}
 	return render(request, template_name, context)
