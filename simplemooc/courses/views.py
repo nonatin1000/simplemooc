@@ -61,6 +61,7 @@ def undo_enrollment(request, slug):
 def announcements(request, slug):
 	template_name='courses/announcements.html'
 	course = get_object_or_404(Course, slug=slug)
+	announcements = course.announcements.all()
 	if not request.user.is_staff:
 		enrollment = get_object_or_404(Enrollment, user=request.user, course=course)
 
@@ -69,5 +70,6 @@ def announcements(request, slug):
 			return redirect('accounts:dashboard')
 	context = {
 		'course': course,
+		'announcements': announcements
 	}
 	return render(request, template_name, context)
