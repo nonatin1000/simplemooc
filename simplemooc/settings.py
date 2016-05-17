@@ -152,6 +152,6 @@ STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
 
 try:
-    from simplemooc.local_settings import *
+    from simplemooc.settings_local import *
 except ImportError:
     pass
