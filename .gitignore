@@ -1,0 +1,4 @@
+*.pyc
+*.pyo
+staticfiles
+simplemooc/settings_local.py
