@@ -25,6 +25,8 @@ SECRET_KEY = 'jak1_x$=zflj)wqge&hn1-+jzei_k^)!or8zi4&i$h95dx#4ei'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
+TEMPLATE_DEBUG = False
+
 ALLOWED_HOSTS = []
 
 
@@ -72,18 +74,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'simplemooc.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/1.9/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
