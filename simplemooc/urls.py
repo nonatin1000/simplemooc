@@ -21,11 +21,13 @@ from django.conf.urls.static import static
 from simplemooc.core import urls as core_urls 
 from simplemooc.courses import urls as courses_urls
 from simplemooc.accounts import urls as accounts_urls
+from simplemooc.forum import urls as forum_urls
 
 urlpatterns = [
 	url(r'^', include(core_urls, namespace='core')),
     url(r'^conta/', include(accounts_urls, namespace='accounts')),
-	url(r'^cursos/', include(courses_urls, namespace='courses')),
+    url(r'^cursos/', include(courses_urls, namespace='courses')),
+	url(r'^forum/', include(forum_urls, namespace='forum')),
     url(r'^admin/', admin.site.urls),
 ]
 
