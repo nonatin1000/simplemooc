@@ -2,3 +2,4 @@
 *.pyo
 staticfiles
 simplemooc/settings_local.py
+db.sqlite3
