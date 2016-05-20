@@ -69,8 +69,34 @@
                     <a class="fright" href="{{ thread.get_absolute_url }}" title="">Criado a {{ object.created|timesince }} atrás</a>
                 </p>
             </div>
+            <div class="well">
+                <h4 id="comments">Respostas<a href="#add_comment" class="fright"></a></h4>
+                {% for reply in object.replies.all %}
+                    <hr>
+                    {% filter linebreaks %}
+                        <trong>{{ reply.author }}</trong> disse à 4 {{ reply.created|timesince }} atrás: 
+                        {{ reply.reply }}
+                    {% endfilter %}
+                {% endfor %}
+                <hr>
+                <form method="post" class="pure-form pure-form-stacked" id="add_comment">
+                    {% csrf_token %}
+                    <fieldset>
+                        {{ form.non_field_errors }}
+                        {% for field in form %}
+                        <div class="pure-control-group">
+                            {{ field.label_tag }}
+                            {{ field }}
+                            {{ field.errors }}
+                        </div>
+                        {% endfor %}
+                        <div class="pure-controls">
+                            <button type="submit" class="pure-button pure-button-primary">Enviar</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 </div>
 {% endblock %}
