@@ -57,12 +57,7 @@
                     <i class="fa fa-tags"></i>
                     Tags: 
                     {% for tag in thread.tags.all %}
-                        <a href="{% url 'forum:index_tagged' tag.slug %}" title="">
-                            {{ tag }}
-                        </a>
-                        {% if not forloop.last %} 
-                            , 
-                        {% endif %}
+                    <a href="{% url 'forum:index_tagged' tag.slug %}" title="">{{ tag }}</a>{% if not forloop.last %},{% endif %}
                     {% endfor %}
                     <a class="fright" href="{{ thread.get_absolute_url }}" title="">Atualizado a {{ thread.modified|timesince }} atrás</a>
                 </p>
@@ -76,16 +71,16 @@
                 {% endif %}
                 {% for page in paginator.page_range %}
                 <li{% if page == page_obj.number %} class="active"{% endif %}>
-                <a href="?page={{ page }}{% if request.GET.order %}&order={{ request.GET.order }}{% endif %}" title="">{{ page }}</a>
-            </li>
-            {% endfor %}
-            {% if page_obj.has_next %}
-            <li>
-                <a href="?page={{ page_obj.next_page_number }}{% if request.GET.order %}&order={{ request.GET.order }}{% endif %}" title="">Próxima</a>
-            </li>
-            {% endif %}
-        </ul>
+                    <a href="?page={{ page }}{% if request.GET.order %}&order={{ request.GET.order }}{% endif %}" title="">{{ page }}</a>
+                </li>
+                {% endfor %}
+                {% if page_obj.has_next %}
+                <li>
+                    <a href="?page={{ page_obj.next_page_number }}{% if request.GET.order %}&order={{ request.GET.order }}{% endif %}" title="">Próxima</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
     </div>
-</div>
 </div>
 {% endblock %}
